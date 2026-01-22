@@ -1,5 +1,8 @@
+import FloatingCartPopup from '@/src/features/cart/components/FloatingCartPopup';
+import { useCart } from '@/src/features/cart/context/CartContext';
 import { useProducts } from '@/src/features/products/hooks/useProducts';
 import { Product } from '@/src/features/products/types/product.types';
+import { useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -12,13 +15,20 @@ import {
 
 export default function Products() {
     const { products, loading, error } = useProducts();
+    const { addToCart, getTotalItems } = useCart();
+    const [isCartExpanded, setIsCartExpanded] = useState(false);
 
     const formatPrice = (price: number) => {
         return `Rp ${price.toLocaleString('id-ID')}`;
     };
 
     const handleProductPress = (product: Product) => {
-        console.log('Product selected:', product.name);
+        addToCart(product);
+        console.log('Product added to cart:', product.name);
+    };
+
+    const toggleCart = () => {
+        setIsCartExpanded(!isCartExpanded);
     };
 
     const renderProduct = ({ item }: { item: Product }) => (
@@ -68,6 +78,8 @@ export default function Products() {
         );
     }
 
+    const hasItemsInCart = getTotalItems() > 0;
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -76,8 +88,15 @@ export default function Products() {
                 keyExtractor={(item) => item.id.toString()}
                 numColumns={2}
                 columnWrapperStyle={styles.row}
-                contentContainerStyle={styles.listContent}
+                contentContainerStyle={[
+                    styles.listContent,
+                    hasItemsInCart && styles.listContentWithCart
+                ]}
                 showsVerticalScrollIndicator={false}
+            />
+            <FloatingCartPopup
+                visible={isCartExpanded}
+                onToggle={toggleCart}
             />
         </View>
     );
@@ -105,6 +124,9 @@ const styles = StyleSheet.create({
     },
     listContent: {
         padding: 12,
+    },
+    listContentWithCart: {
+        paddingBottom: 100,
     },
     row: {
         justifyContent: 'space-between',

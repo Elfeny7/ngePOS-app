@@ -15,6 +15,7 @@ export function useProducts(): UseProductsReturn {
                 setProducts(dummyProducts);
                 setError(null);
             } catch (err) {
+                console.log(err);
                 setError('Failed to fetch products');
             } finally {
                 setLoading(false);
