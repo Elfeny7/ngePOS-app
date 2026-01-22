@@ -1,6 +1,8 @@
+import PaymentMethodModal from '@/src/features/cart/components/PaymentMethodModal';
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { CartItem } from '@/src/features/cart/types/cart.types';
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 import {
     Alert,
     FlatList,
@@ -21,23 +23,13 @@ export default function Cart() {
         getTotalItems,
     } = useCart();
 
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+
     const formatPrice = (price: number) => {
         return `Rp ${price.toLocaleString('id-ID')}`;
     };
 
-    const handleRemoveItem = (productId: number, productName: string) => {
-        // Alert.alert(
-        //     'Hapus Item',
-        //     `Apakah Anda yakin ingin menghapus "${productName}" dari keranjang?`,
-        //     [
-        //         { text: 'Batal', style: 'cancel' },
-        //         {
-        //             text: 'Hapus',
-        //             style: 'destructive',
-        //             onPress: () => removeFromCart(productId),
-        //         },
-        //     ]
-        // );
+    const handleRemoveItem = (productId: number) => {
         removeFromCart(productId);
     };
 
@@ -57,11 +49,20 @@ export default function Cart() {
     };
 
     const handleCheckout = () => {
+        setShowPaymentModal(true);
+    };
+
+    const handlePaymentMethodSelect = (method: string) => {
+        setShowPaymentModal(false);
         Alert.alert(
-            'Checkout',
-            `Total: ${formatPrice(getTotalPrice())}\n\nFitur checkout akan segera tersedia!`,
+            'Konfirmasi Pembayaran',
+            `Metode Pembayaran: ${method}\nTotal: ${formatPrice(getTotalPrice())}\n\nProses pembayaran akan segera diimplementasikan!`,
             [{ text: 'OK' }]
         );
+    };
+
+    const handleCloseModal = () => {
+        setShowPaymentModal(false);
     };
 
     const renderCartItem = ({ item }: { item: CartItem }) => (
@@ -105,7 +106,7 @@ export default function Cart() {
                 <TouchableOpacity
                     style={styles.removeButton}
                     onPress={() =>
-                        handleRemoveItem(item.product.id, item.product.name)
+                        handleRemoveItem(item.product.id)
                     }
                 >
                     <Ionicons name="trash-outline" size={20} color="#EF4444" />
@@ -186,6 +187,13 @@ export default function Cart() {
                     />
                 </TouchableOpacity>
             </View>
+
+            <PaymentMethodModal
+                visible={showPaymentModal}
+                onClose={handleCloseModal}
+                onSelectPayment={handlePaymentMethodSelect}
+                totalAmount={getTotalPrice()}
+            />
         </View>
     );
 }
