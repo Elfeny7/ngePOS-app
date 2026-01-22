@@ -9,9 +9,9 @@ export default function TabLayout() {
                     <Ionicons name="grid-outline" size={size} color={color} />
                 ),
             }} />
-            <Tabs.Screen name="transaction" options={{
-                title: 'Transaction', tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="cash-outline" size={size} color={color} />
+            <Tabs.Screen name="products" options={{
+                title: 'Products', tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="fast-food" size={size} color={color} />
                 ),
             }} />
             <Tabs.Screen name="cart" options={{
