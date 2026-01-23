@@ -2,6 +2,7 @@ import CashPaymentModal from '@/src/features/cart/components/CashPaymentModal';
 import PaymentMethodModal from '@/src/features/cart/components/PaymentMethodModal';
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { CartItem } from '@/src/features/cart/types/cart.types';
+import { useHistory } from '@/src/features/history/context/HistoryContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {
@@ -23,6 +24,8 @@ export default function Cart() {
         getTotalPrice,
         getTotalItems,
     } = useCart();
+
+    const { addTransaction } = useHistory();
 
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [showCashPaymentModal, setShowCashPaymentModal] = useState(false);
@@ -67,8 +70,22 @@ export default function Cart() {
         }
     };
 
-    const handleCashPaymentSuccess = (paidAmount: number, change: number) => {
+    const handleCashPaymentSuccess = async (paidAmount: number, change: number) => {
         setShowCashPaymentModal(false);
+
+        // Save transaction to history before clearing cart
+        try {
+            await addTransaction({
+                items: [...cartItems],
+                totalAmount: getTotalPrice(),
+                paidAmount,
+                change,
+                paymentMethod: 'Tunai',
+            });
+        } catch (error) {
+            console.error('Error saving transaction:', error);
+        }
+
         clearCart();
         Alert.alert(
             'Transaksi Selesai',
