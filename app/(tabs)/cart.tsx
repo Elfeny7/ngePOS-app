@@ -87,11 +87,6 @@ export default function Cart() {
         }
 
         clearCart();
-        Alert.alert(
-            'Transaksi Selesai',
-            `Pembayaran berhasil!\nDibayar: ${formatPrice(paidAmount)}\nKembalian: ${formatPrice(change)}`,
-            [{ text: 'OK' }]
-        );
     };
 
     const handleCloseCashPaymentModal = () => {
