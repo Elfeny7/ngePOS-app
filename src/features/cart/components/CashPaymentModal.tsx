@@ -254,7 +254,7 @@ const CashPaymentModal: React.FC<CashPaymentModalProps> = ({
         <Modal
             visible={visible}
             transparent={true}
-            animationType="slide"
+            animationType="fade"
             onRequestClose={handleClose}
         >
             <KeyboardAvoidingView
