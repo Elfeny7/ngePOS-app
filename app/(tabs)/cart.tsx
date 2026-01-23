@@ -1,3 +1,4 @@
+import CashPaymentModal from '@/src/features/cart/components/CashPaymentModal';
 import PaymentMethodModal from '@/src/features/cart/components/PaymentMethodModal';
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { CartItem } from '@/src/features/cart/types/cart.types';
@@ -24,6 +25,7 @@ export default function Cart() {
     } = useCart();
 
     const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [showCashPaymentModal, setShowCashPaymentModal] = useState(false);
 
     const formatPrice = (price: number) => {
         return `Rp ${price.toLocaleString('id-ID')}`;
@@ -54,11 +56,29 @@ export default function Cart() {
 
     const handlePaymentMethodSelect = (method: string) => {
         setShowPaymentModal(false);
+        if (method === 'Tunai') {
+            setShowCashPaymentModal(true);
+        } else {
+            Alert.alert(
+                'Konfirmasi Pembayaran',
+                `Metode Pembayaran: ${method}\nTotal: ${formatPrice(getTotalPrice())}\n\nProses pembayaran akan segera diimplementasikan!`,
+                [{ text: 'OK' }]
+            );
+        }
+    };
+
+    const handleCashPaymentSuccess = (paidAmount: number, change: number) => {
+        setShowCashPaymentModal(false);
+        clearCart();
         Alert.alert(
-            'Konfirmasi Pembayaran',
-            `Metode Pembayaran: ${method}\nTotal: ${formatPrice(getTotalPrice())}\n\nProses pembayaran akan segera diimplementasikan!`,
+            'Transaksi Selesai',
+            `Pembayaran berhasil!\nDibayar: ${formatPrice(paidAmount)}\nKembalian: ${formatPrice(change)}`,
             [{ text: 'OK' }]
         );
+    };
+
+    const handleCloseCashPaymentModal = () => {
+        setShowCashPaymentModal(false);
     };
 
     const handleCloseModal = () => {
@@ -192,6 +212,13 @@ export default function Cart() {
                 visible={showPaymentModal}
                 onClose={handleCloseModal}
                 onSelectPayment={handlePaymentMethodSelect}
+                totalAmount={getTotalPrice()}
+            />
+
+            <CashPaymentModal
+                visible={showCashPaymentModal}
+                onClose={handleCloseCashPaymentModal}
+                onPaymentSuccess={handleCashPaymentSuccess}
                 totalAmount={getTotalPrice()}
             />
         </View>
