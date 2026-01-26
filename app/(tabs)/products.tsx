@@ -1,4 +1,4 @@
-import FloatingCartPopup from '@/src/features/cart/components/FloatingCartPopup';
+import FloatingCartPopup from '@/src/features/products/components/FloatingCartPopup';
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { useProducts } from '@/src/features/products/hooks/useProducts';
 import { Product } from '@/src/features/products/types/product.types';

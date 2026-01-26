@@ -10,8 +10,8 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { useCart } from '../context/CartContext';
-import { CartItem } from '../types/cart.types';
+import { useCart } from '@/src/features/cart/context/CartContext';
+import { CartItem } from '@/src/features/cart/types/cart.types';
 
 interface FloatingCartPopupProps {
     visible: boolean;
