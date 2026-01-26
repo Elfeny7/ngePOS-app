@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { CartItem } from '@/src/features/cart/types/cart.types';
+import { CheckoutButton } from '@/src/shared/components/CheckoutButton';
 
 interface FloatingCartPopupProps {
     visible: boolean;
@@ -151,20 +152,7 @@ const FloatingCartPopup: React.FC<FloatingCartPopupProps> = ({
                                 {formatPrice(getTotalPrice())}
                             </Text>
                         </View>
-                        <TouchableOpacity
-                            style={styles.checkoutButton}
-                            onPress={handleGoToCart}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={styles.checkoutButtonText}>
-                                Go to Cart
-                            </Text>
-                            <Ionicons
-                                name="arrow-forward"
-                                size={20}
-                                color="#FFFFFF"
-                            />
-                        </TouchableOpacity>
+                        <CheckoutButton onPress={handleGoToCart} text="Go to Cart" />
                     </View>
                 </Animated.View>
             )}
@@ -352,20 +340,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         color: '#1E293B',
-    },
-    checkoutButton: {
-        backgroundColor: '#6366F1',
-        borderRadius: 12,
-        paddingVertical: 14,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    checkoutButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '600',
-        marginRight: 8,
     },
 });
 

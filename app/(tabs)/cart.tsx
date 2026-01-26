@@ -1,6 +1,7 @@
 import CashPaymentModal from '@/src/features/cart/components/CashPaymentModal';
 import PaymentMethodModal from '@/src/features/cart/components/PaymentMethodModal';
 import { useCart } from '@/src/features/cart/context/CartContext';
+import { CheckoutButton } from '@/src/shared/components/CheckoutButton';
 import { CartItem } from '@/src/features/cart/types/cart.types';
 import { useHistory } from '@/src/features/history/context/HistoryContext';
 import { formatPrice } from '@/src/shared/utils/formatPrice';
@@ -201,20 +202,7 @@ export default function Cart() {
                         </Text>
                     </View>
                 </View>
-                <TouchableOpacity
-                    style={styles.checkoutButton}
-                    onPress={handleCheckout}
-                    activeOpacity={0.8}
-                >
-                    <Text style={styles.checkoutButtonText}>
-                        Lanjut ke Pembayaran
-                    </Text>
-                    <Ionicons
-                        name="arrow-forward"
-                        size={20}
-                        color="#FFFFFF"
-                    />
-                </TouchableOpacity>
+                <CheckoutButton onPress={handleCheckout} text="Lanjut ke Pembayaran" />
             </View>
 
             <PaymentMethodModal
@@ -405,21 +393,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         color: '#6366F1',
-    },
-    checkoutButton: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#6366F1',
-        paddingVertical: 16,
-        borderRadius: 12,
-        boxShadow: '0 4px 8px rgba(99, 102, 241, 0.3)',
-        elevation: 4,
-    },
-    checkoutButtonText: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#FFFFFF',
-        marginRight: 8,
     },
 });
