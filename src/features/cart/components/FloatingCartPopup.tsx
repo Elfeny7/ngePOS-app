@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import React from 'react';
 import {
     Animated,
@@ -29,10 +30,6 @@ const FloatingCartPopup: React.FC<FloatingCartPopupProps> = ({
         updateQuantity,
         removeFromCart,
     } = useCart();
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const handleGoToCart = () => {
         router.push('/cart');

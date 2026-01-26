@@ -3,6 +3,7 @@ import PaymentMethodModal from '@/src/features/cart/components/PaymentMethodModa
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { CartItem } from '@/src/features/cart/types/cart.types';
 import { useHistory } from '@/src/features/history/context/HistoryContext';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {
@@ -29,10 +30,6 @@ export default function Cart() {
 
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [showCashPaymentModal, setShowCashPaymentModal] = useState(false);
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const handleRemoveItem = (productId: number) => {
         removeFromCart(productId);

@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import React from 'react';
 import {
     Modal,
@@ -21,10 +22,6 @@ const PaymentMethodModal: React.FC<PaymentMethodModalProps> = ({
     onSelectPayment,
     totalAmount,
 }) => {
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
-
     return (
         <Modal
             visible={visible}

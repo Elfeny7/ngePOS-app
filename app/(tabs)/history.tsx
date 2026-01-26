@@ -1,14 +1,11 @@
 import { useHistory } from '@/src/features/history/context/HistoryContext';
 import { Transaction } from '@/src/features/history/types/history.types';
 import { Ionicons } from '@expo/vector-icons';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import { Alert, FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function History() {
     const { transactions, clearHistory, getTransactions, isLoading } = useHistory();
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);

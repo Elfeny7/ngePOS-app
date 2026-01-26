@@ -2,14 +2,11 @@ import { useHistory } from '@/src/features/history/context/HistoryContext';
 import { Transaction } from '@/src/features/history/types/history.types';
 import { Ionicons } from '@expo/vector-icons';
 import { useMemo } from 'react';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function Dashboard() {
     const { transactions, getTransactions, isLoading } = useHistory();
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);

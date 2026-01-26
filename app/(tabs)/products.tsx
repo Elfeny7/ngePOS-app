@@ -2,6 +2,7 @@ import FloatingCartPopup from '@/src/features/cart/components/FloatingCartPopup'
 import { useCart } from '@/src/features/cart/context/CartContext';
 import { useProducts } from '@/src/features/products/hooks/useProducts';
 import { Product } from '@/src/features/products/types/product.types';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import { useState } from 'react';
 import {
     ActivityIndicator,
@@ -17,10 +18,6 @@ export default function Products() {
     const { products, loading, error } = useProducts();
     const { addToCart, getTotalItems } = useCart();
     const [isCartExpanded, setIsCartExpanded] = useState(false);
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const handleProductPress = (product: Product) => {
         addToCart(product);

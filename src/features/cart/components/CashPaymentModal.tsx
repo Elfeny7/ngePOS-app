@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { formatPrice } from '@/src/shared/utils/formatPrice';
 import React, { useState } from 'react';
 import {
     Animated,
@@ -30,10 +31,6 @@ const CashPaymentModal: React.FC<CashPaymentModalProps> = ({
     const [showSuccess, setShowSuccess] = useState(false);
     const [changeAmount, setChangeAmount] = useState(0);
     const [scaleAnim] = useState(new Animated.Value(0));
-
-    const formatPrice = (price: number) => {
-        return `Rp ${price.toLocaleString('id-ID')}`;
-    };
 
     const formatInputPrice = (value: string) => {
         // Remove non-numeric characters
